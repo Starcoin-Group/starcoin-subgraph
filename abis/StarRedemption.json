@@ -1,0 +1,749 @@
+[
+    {
+        "type": "constructor",
+        "inputs": [
+            {
+                "name": "_initialOwner",
+                "type": "address",
+                "internalType": "address"
+            },
+            {
+                "name": "_staro",
+                "type": "address",
+                "internalType": "address"
+            },
+            {
+                "name": "_starcoin",
+                "type": "address",
+                "internalType": "address"
+            },
+            {
+                "name": "_usdt",
+                "type": "address",
+                "internalType": "address"
+            },
+            {
+                "name": "_blocklist",
+                "type": "address",
+                "internalType": "address"
+            },
+            {
+                "name": "_sanctionsList",
+                "type": "address",
+                "internalType": "address"
+            },
+            {
+                "name": "_startedAt",
+                "type": "uint32",
+                "internalType": "uint32"
+            },
+            {
+                "name": "_endedAt",
+                "type": "uint32",
+                "internalType": "uint32"
+            }
+        ],
+        "stateMutability": "nonpayable"
+    },
+    {
+        "name": "AccessControlBadConfirmation",
+        "type": "error",
+        "inputs": []
+    },
+    {
+        "name": "AccessControlUnauthorizedAccount",
+        "type": "error",
+        "inputs": [
+            {
+                "name": "account",
+                "type": "address",
+                "internalType": "address"
+            },
+            {
+                "name": "neededRole",
+                "type": "bytes32",
+                "internalType": "bytes32"
+            }
+        ]
+    },
+    {
+        "name": "AmountCannotBeZero",
+        "type": "error",
+        "inputs": []
+    },
+    {
+        "name": "CallerBlocked",
+        "type": "error",
+        "inputs": []
+    },
+    {
+        "name": "CallerNotListConfigurator",
+        "type": "error",
+        "inputs": []
+    },
+    {
+        "name": "CallerSanctioned",
+        "type": "error",
+        "inputs": []
+    },
+    {
+        "name": "FromAddressBlocked",
+        "type": "error",
+        "inputs": []
+    },
+    {
+        "name": "FromAddressSanctioned",
+        "type": "error",
+        "inputs": []
+    },
+    {
+        "name": "InsufficientAllowanceToRedeem",
+        "type": "error",
+        "inputs": []
+    },
+    {
+        "name": "InsufficientBalanceToRedeem",
+        "type": "error",
+        "inputs": []
+    },
+    {
+        "name": "InvalidBlocklistAddress",
+        "type": "error",
+        "inputs": []
+    },
+    {
+        "name": "InvalidSanctionsListAddress",
+        "type": "error",
+        "inputs": []
+    },
+    {
+        "name": "OwnableInvalidOwner",
+        "type": "error",
+        "inputs": [
+            {
+                "name": "owner",
+                "type": "address",
+                "internalType": "address"
+            }
+        ]
+    },
+    {
+        "name": "OwnableUnauthorizedAccount",
+        "type": "error",
+        "inputs": [
+            {
+                "name": "account",
+                "type": "address",
+                "internalType": "address"
+            }
+        ]
+    },
+    {
+        "name": "RedemptionNotActive",
+        "type": "error",
+        "inputs": []
+    },
+    {
+        "name": "ReentrancyGuardReentrantCall",
+        "type": "error",
+        "inputs": []
+    },
+    {
+        "name": "ToAddressBlocked",
+        "type": "error",
+        "inputs": []
+    },
+    {
+        "name": "ToAddressSanctioned",
+        "type": "error",
+        "inputs": []
+    },
+    {
+        "name": "BlocklistSet",
+        "type": "event",
+        "inputs": [
+            {
+                "name": "oldBlocklist",
+                "type": "address",
+                "indexed": false,
+                "internalType": "address"
+            },
+            {
+                "name": "newBlocklist",
+                "type": "address",
+                "indexed": false,
+                "internalType": "address"
+            }
+        ],
+        "anonymous": false
+    },
+    {
+        "name": "OwnershipTransferStarted",
+        "type": "event",
+        "inputs": [
+            {
+                "name": "previousOwner",
+                "type": "address",
+                "indexed": true,
+                "internalType": "address"
+            },
+            {
+                "name": "newOwner",
+                "type": "address",
+                "indexed": true,
+                "internalType": "address"
+            }
+        ],
+        "anonymous": false
+    },
+    {
+        "name": "OwnershipTransferred",
+        "type": "event",
+        "inputs": [
+            {
+                "name": "previousOwner",
+                "type": "address",
+                "indexed": true,
+                "internalType": "address"
+            },
+            {
+                "name": "newOwner",
+                "type": "address",
+                "indexed": true,
+                "internalType": "address"
+            }
+        ],
+        "anonymous": false
+    },
+    {
+        "name": "Redeemed",
+        "type": "event",
+        "inputs": [
+            {
+                "name": "user",
+                "type": "address",
+                "indexed": true,
+                "internalType": "address"
+            },
+            {
+                "name": "amount",
+                "type": "uint256",
+                "indexed": false,
+                "internalType": "uint256"
+            },
+            {
+                "name": "totalCost",
+                "type": "uint256",
+                "indexed": false,
+                "internalType": "uint256"
+            }
+        ],
+        "anonymous": false
+    },
+    {
+        "name": "RoleAdminChanged",
+        "type": "event",
+        "inputs": [
+            {
+                "name": "role",
+                "type": "bytes32",
+                "indexed": true,
+                "internalType": "bytes32"
+            },
+            {
+                "name": "previousAdminRole",
+                "type": "bytes32",
+                "indexed": true,
+                "internalType": "bytes32"
+            },
+            {
+                "name": "newAdminRole",
+                "type": "bytes32",
+                "indexed": true,
+                "internalType": "bytes32"
+            }
+        ],
+        "anonymous": false
+    },
+    {
+        "name": "RoleGranted",
+        "type": "event",
+        "inputs": [
+            {
+                "name": "role",
+                "type": "bytes32",
+                "indexed": true,
+                "internalType": "bytes32"
+            },
+            {
+                "name": "account",
+                "type": "address",
+                "indexed": true,
+                "internalType": "address"
+            },
+            {
+                "name": "sender",
+                "type": "address",
+                "indexed": true,
+                "internalType": "address"
+            }
+        ],
+        "anonymous": false
+    },
+    {
+        "name": "RoleRevoked",
+        "type": "event",
+        "inputs": [
+            {
+                "name": "role",
+                "type": "bytes32",
+                "indexed": true,
+                "internalType": "bytes32"
+            },
+            {
+                "name": "account",
+                "type": "address",
+                "indexed": true,
+                "internalType": "address"
+            },
+            {
+                "name": "sender",
+                "type": "address",
+                "indexed": true,
+                "internalType": "address"
+            }
+        ],
+        "anonymous": false
+    },
+    {
+        "name": "SanctionsListSet",
+        "type": "event",
+        "inputs": [
+            {
+                "name": "oldSanctionsList",
+                "type": "address",
+                "indexed": false,
+                "internalType": "address"
+            },
+            {
+                "name": "newSanctionsList",
+                "type": "address",
+                "indexed": false,
+                "internalType": "address"
+            }
+        ],
+        "anonymous": false
+    },
+    {
+        "name": "DEFAULT_ADMIN_ROLE",
+        "type": "function",
+        "inputs": [],
+        "outputs": [
+            {
+                "name": "",
+                "type": "bytes32",
+                "internalType": "bytes32"
+            }
+        ],
+        "stateMutability": "view"
+    },
+    {
+        "name": "REDEMPTION_PRICE",
+        "type": "function",
+        "inputs": [],
+        "outputs": [
+            {
+                "name": "",
+                "type": "uint256",
+                "internalType": "uint256"
+            }
+        ],
+        "stateMutability": "view"
+    },
+    {
+        "name": "USDT",
+        "type": "function",
+        "inputs": [],
+        "outputs": [
+            {
+                "name": "",
+                "type": "address",
+                "internalType": "contract IERC20"
+            }
+        ],
+        "stateMutability": "view"
+    },
+    {
+        "name": "acceptOwnership",
+        "type": "function",
+        "inputs": [],
+        "outputs": [],
+        "stateMutability": "nonpayable"
+    },
+    {
+        "name": "blocklist",
+        "type": "function",
+        "inputs": [],
+        "outputs": [
+            {
+                "name": "",
+                "type": "address",
+                "internalType": "contract IBlocklist"
+            }
+        ],
+        "stateMutability": "view"
+    },
+    {
+        "name": "getRoleAdmin",
+        "type": "function",
+        "inputs": [
+            {
+                "name": "role",
+                "type": "bytes32",
+                "internalType": "bytes32"
+            }
+        ],
+        "outputs": [
+            {
+                "name": "",
+                "type": "bytes32",
+                "internalType": "bytes32"
+            }
+        ],
+        "stateMutability": "view"
+    },
+    {
+        "name": "grantListConfiguratorRole",
+        "type": "function",
+        "inputs": [
+            {
+                "name": "account",
+                "type": "address",
+                "internalType": "address"
+            }
+        ],
+        "outputs": [],
+        "stateMutability": "nonpayable"
+    },
+    {
+        "name": "grantRole",
+        "type": "function",
+        "inputs": [
+            {
+                "name": "role",
+                "type": "bytes32",
+                "internalType": "bytes32"
+            },
+            {
+                "name": "account",
+                "type": "address",
+                "internalType": "address"
+            }
+        ],
+        "outputs": [],
+        "stateMutability": "nonpayable"
+    },
+    {
+        "name": "hasRole",
+        "type": "function",
+        "inputs": [
+            {
+                "name": "role",
+                "type": "bytes32",
+                "internalType": "bytes32"
+            },
+            {
+                "name": "account",
+                "type": "address",
+                "internalType": "address"
+            }
+        ],
+        "outputs": [
+            {
+                "name": "",
+                "type": "bool",
+                "internalType": "bool"
+            }
+        ],
+        "stateMutability": "view"
+    },
+    {
+        "name": "owner",
+        "type": "function",
+        "inputs": [],
+        "outputs": [
+            {
+                "name": "",
+                "type": "address",
+                "internalType": "address"
+            }
+        ],
+        "stateMutability": "view"
+    },
+    {
+        "name": "pendingOwner",
+        "type": "function",
+        "inputs": [],
+        "outputs": [
+            {
+                "name": "",
+                "type": "address",
+                "internalType": "address"
+            }
+        ],
+        "stateMutability": "view"
+    },
+    {
+        "name": "priorRedemptionEndedAt",
+        "type": "function",
+        "inputs": [],
+        "outputs": [
+            {
+                "name": "",
+                "type": "uint32",
+                "internalType": "uint32"
+            }
+        ],
+        "stateMutability": "view"
+    },
+    {
+        "name": "priorRedemptionStartedAt",
+        "type": "function",
+        "inputs": [],
+        "outputs": [
+            {
+                "name": "",
+                "type": "uint32",
+                "internalType": "uint32"
+            }
+        ],
+        "stateMutability": "view"
+    },
+    {
+        "name": "redeem",
+        "type": "function",
+        "inputs": [
+            {
+                "name": "amount",
+                "type": "uint256",
+                "internalType": "uint256"
+            }
+        ],
+        "outputs": [],
+        "stateMutability": "nonpayable"
+    },
+    {
+        "name": "renounceOwnership",
+        "type": "function",
+        "inputs": [],
+        "outputs": [],
+        "stateMutability": "nonpayable"
+    },
+    {
+        "name": "renounceRole",
+        "type": "function",
+        "inputs": [
+            {
+                "name": "role",
+                "type": "bytes32",
+                "internalType": "bytes32"
+            },
+            {
+                "name": "callerConfirmation",
+                "type": "address",
+                "internalType": "address"
+            }
+        ],
+        "outputs": [],
+        "stateMutability": "nonpayable"
+    },
+    {
+        "name": "revokeListConfiguratorRole",
+        "type": "function",
+        "inputs": [
+            {
+                "name": "account",
+                "type": "address",
+                "internalType": "address"
+            }
+        ],
+        "outputs": [],
+        "stateMutability": "nonpayable"
+    },
+    {
+        "name": "revokeRole",
+        "type": "function",
+        "inputs": [
+            {
+                "name": "role",
+                "type": "bytes32",
+                "internalType": "bytes32"
+            },
+            {
+                "name": "account",
+                "type": "address",
+                "internalType": "address"
+            }
+        ],
+        "outputs": [],
+        "stateMutability": "nonpayable"
+    },
+    {
+        "name": "sanctionsList",
+        "type": "function",
+        "inputs": [],
+        "outputs": [
+            {
+                "name": "",
+                "type": "address",
+                "internalType": "contract ISanctionsList"
+            }
+        ],
+        "stateMutability": "view"
+    },
+    {
+        "name": "setBlocklistRegistry",
+        "type": "function",
+        "inputs": [
+            {
+                "name": "blocklist",
+                "type": "address",
+                "internalType": "address"
+            }
+        ],
+        "outputs": [],
+        "stateMutability": "nonpayable"
+    },
+    {
+        "name": "setPriorRedemptionEndedAt",
+        "type": "function",
+        "inputs": [
+            {
+                "name": "_endedAt",
+                "type": "uint32",
+                "internalType": "uint32"
+            }
+        ],
+        "outputs": [],
+        "stateMutability": "nonpayable"
+    },
+    {
+        "name": "setPriorRedemptionStartedAt",
+        "type": "function",
+        "inputs": [
+            {
+                "name": "_startedAt",
+                "type": "uint32",
+                "internalType": "uint32"
+            }
+        ],
+        "outputs": [],
+        "stateMutability": "nonpayable"
+    },
+    {
+        "name": "setSanctionsListRegistry",
+        "type": "function",
+        "inputs": [
+            {
+                "name": "sanctionsList",
+                "type": "address",
+                "internalType": "address"
+            }
+        ],
+        "outputs": [],
+        "stateMutability": "nonpayable"
+    },
+    {
+        "name": "starcoin",
+        "type": "function",
+        "inputs": [],
+        "outputs": [
+            {
+                "name": "",
+                "type": "address",
+                "internalType": "contract IStarcoin"
+            }
+        ],
+        "stateMutability": "view"
+    },
+    {
+        "name": "staro",
+        "type": "function",
+        "inputs": [],
+        "outputs": [
+            {
+                "name": "",
+                "type": "address",
+                "internalType": "contract IStarO"
+            }
+        ],
+        "stateMutability": "view"
+    },
+    {
+        "name": "supportsInterface",
+        "type": "function",
+        "inputs": [
+            {
+                "name": "interfaceId",
+                "type": "bytes4",
+                "internalType": "bytes4"
+            }
+        ],
+        "outputs": [
+            {
+                "name": "",
+                "type": "bool",
+                "internalType": "bool"
+            }
+        ],
+        "stateMutability": "view"
+    },
+    {
+        "name": "transferOwnership",
+        "type": "function",
+        "inputs": [
+            {
+                "name": "newOwner",
+                "type": "address",
+                "internalType": "address"
+            }
+        ],
+        "outputs": [],
+        "stateMutability": "nonpayable"
+    },
+    {
+        "name": "withdrawERC20",
+        "type": "function",
+        "inputs": [
+            {
+                "name": "token",
+                "type": "address",
+                "internalType": "address"
+            },
+            {
+                "name": "amount",
+                "type": "uint256",
+                "internalType": "uint256"
+            }
+        ],
+        "outputs": [],
+        "stateMutability": "nonpayable"
+    },
+    {
+        "name": "withdrawNative",
+        "type": "function",
+        "inputs": [
+            {
+                "name": "amount",
+                "type": "uint256",
+                "internalType": "uint256"
+            }
+        ],
+        "outputs": [],
+        "stateMutability": "nonpayable"
+    },
+    {
+        "type": "receive",
+        "stateMutability": "payable"
+    }
+]
