@@ -1,6 +1,6 @@
 specVersion: 0.0.8
-description: Subgraph for ContractA and ContractB on Conflux eSpace
-repository: https://github.com/your-org/my-subgraph
+description: Subgraph for StarCollection and StarRedemption on Conflux eSpace
+repository: https://github.com/Starcoin-Group/starcoin-subgraph
 schema:
   file: ./schema.graphql
 
