@@ -2,14 +2,14 @@ type Collected @entity(immutable: true) {
   id: ID!
   collector: String!
   allocatee: String!
-  amount: BigInt!
-  collected: BigInt!
+  amount: BigDecimal!
+  collected: BigDecimal!
   expiredAt: BigInt!
 }
 
 type Redeemed @entity(immutable: true) {
   id: ID!
   user: String!
-  amount: BigInt!
-  totalCost: BigInt!
+  amount: BigDecimal!
+  totalCost: BigDecimal!
 }
