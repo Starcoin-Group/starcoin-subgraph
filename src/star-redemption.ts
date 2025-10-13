@@ -1,12 +1,18 @@
+import { Bytes } from "@graphprotocol/graph-ts";
+import { Redeemed as RedeemedEvent } from "../generated/StarRedemption/StarRedemption";
 import { Redeemed } from "../generated/schema";
-import { getSubgraphConfig } from "./utils/chains";
 
-export function handleRedeemed(event: Redeemed): void {
-  const { user, amount, totalCost } = event;
-  const subgraphConfig = getSubgraphConfig("conflux-espace-testnet");
-  const redeemedEntity = new Redeemed(subgraphConfig.starRedemptionAddress);
-  redeemedEntity.user = user;
-  redeemedEntity.amount = amount;
-  redeemedEntity.totalCost = totalCost;
+export function handleRedeemed(event: RedeemedEvent): void {
+  const redeemedEntity = new Redeemed(
+    event.transaction.hash
+      .concat(Bytes.fromUTF8("-"))
+      .concatI32(event.logIndex.toI32())
+  );
+  redeemedEntity.user = event.params.user.toHexString();
+  redeemedEntity.amount = event.params.amount;
+  redeemedEntity.totalCost = event.params.totalCost;
+  redeemedEntity.blockNumber = event.block.number;
+  redeemedEntity.blockTimestamp = event.block.timestamp;
+  redeemedEntity.transactionHash = event.transaction.hash;
   redeemedEntity.save();
 }
