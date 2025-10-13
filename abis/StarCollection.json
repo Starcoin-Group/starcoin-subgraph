@@ -840,6 +840,19 @@
         "stateMutability": "nonpayable"
     },
     {
+        "name": "updateStarO",
+        "type": "function",
+        "inputs": [
+            {
+                "name": "_staro",
+                "type": "address",
+                "internalType": "address"
+            }
+        ],
+        "outputs": [],
+        "stateMutability": "nonpayable"
+    },
+    {
         "name": "withdrawERC20",
         "type": "function",
         "inputs": [
