@@ -80,6 +80,12 @@ The testnet configuration is defined in `subgraph.testnet.yaml`:
 - **StarCollection Contract**: `0x8dA847EcFbf2a49B2903640c5Af2EF36B2D0C14F` (start block: 233776835)
 - **StarRedemption Contract**: `0xdf03ad381D6b3632a0502f77f13164599C98870c` (start block: 233777125)
 
+### Mainnet
+The mainnet configuration is defined in `subgraph.mainnet.yaml`:
+
+- **Network**: conflux-espace-testnet
+- **StarCollection Contract**: `0xd338D0EcbB8A41A3DD7A857F37ef97ba548b33C3` (start block: 132342520)
+
 ## License
 
 GPL-3.0
