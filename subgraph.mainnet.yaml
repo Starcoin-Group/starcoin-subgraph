@@ -1,0 +1,27 @@
+specVersion: 0.0.8
+description: Subgraph for StarCollection and StarRedemption on Conflux eSpace
+repository: https://github.com/Starcoin-Group/starcoin-subgraph
+schema:
+  file: ./schema.graphql
+
+dataSources:
+  - kind: ethereum/contract
+    name: StarCollection
+    network: conflux-espace
+    source:
+      address: "0xd338D0EcbB8A41A3DD7A857F37ef97ba548b33C3"
+      abi: StarCollection
+      startBlock: 132342520
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.7
+      language: wasm/assemblyscript
+      entities:
+        - Collected
+      abis:
+        - name: StarCollection
+          file: ./abis/StarCollection.json
+      eventHandlers:
+        - event: Collected(indexed address,indexed address,uint256,uint256,uint32)
+          handler: handleCollected
+      file: ./src/star-collection.ts
